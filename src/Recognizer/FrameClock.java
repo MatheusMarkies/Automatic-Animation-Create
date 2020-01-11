@@ -45,7 +45,7 @@ public class FrameClock extends Thread{
                     if(Exec == false){
                     //passComparatorSymmetric(getFile(),1);
                     //passComparatorWithTolerance(getFile(),60);
-                    passComparatorWithTolerancePlus(getFile(),100,1);
+                    passComparatorWithTolerancePlus(getFile(),100,3);
                     Exec = true;
                     }
                 } catch (IOException ex) {

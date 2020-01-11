@@ -6,7 +6,10 @@
 package Recognizer;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -15,6 +18,7 @@ import java.util.ArrayList;
 public class ProcessingInformation {
 
     static String ResultPath = "C:\\Users\\Matheus Markies\\Desktop\\AnimationData\\SpeechDataBase\\ScriptData\\FirstRecognizer\\";
+    static String Result = "C:\\Users\\Matheus Markies\\Desktop\\AnimationData\\SpeechDataBase\\ScriptData\\Result\\";
     
     public ProcessingInformation() {
     getMoreRepeatedWords();
@@ -34,7 +38,7 @@ public class ProcessingInformation {
            FileNames.add(AllFiles[t].getName());
                
        }
-       System.out.println("FileNames: "+FileNames);
+       //System.out.println("FileNames: "+FileNames);
        
        ArrayList<String> RepeatedWords = new ArrayList<>();
        ArrayList<Integer> RepeatedNumber = new ArrayList<>();
@@ -74,7 +78,33 @@ public class ProcessingInformation {
    }//While
        
    System.out.println("RepeatedWords "+RepeatedWords);
-       
+   System.out.println("RepeatedNumber "+RepeatedNumber);
+   
+   int porc = (RepeatedNumber.get(0) * Comparator.getTolerance())/100;
+   
+   System.out.println("PROC: "+porc);
+   
+   ArrayList<String> TXT_Result = new ArrayList<>();
+   for(int t = 0;t<RepeatedNumber.size();t++){
+   if(RepeatedNumber.get(t) >= porc){
+   TXT_Result.add(RepeatedWords.get(t));
+   }
+   }
+   
+   String[] TXT_ResultArray = new String[TXT_Result.size()];
+   for(int i =0;i<TXT_Result.size();i++){
+   TXT_ResultArray[i] = TXT_Result.get(i);
+   }
+   
+   File file = new File(Result+"result.txt");
+   
+   TXTUtilities.CreateTXT.CreateTXTFile(file);
+        try {
+            TXTUtilities.WriteTXT.Write_Array_TXT_File(file, TXT_ResultArray);
+        } catch (IOException ex) {
+            Logger.getLogger(ProcessingInformation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+   
   }//Method
 
 }//CLASS

@@ -22,7 +22,7 @@ public class TrainingLogResult {
 static String TrainingResultsFolder = "C:\\Users\\Matheus Markies\\Desktop\\AnimationData\\SpeechDataBase\\WordsDataBase\\Training\\TrainingResults";
 static String WordsDataBaseDIR = "C:\\Users\\Matheus Markies\\Desktop\\AnimationData\\SpeechDataBase\\WordsDataBase";
     
- public static void startTrainingLogResultForAritmetic(){
+public static void startTrainingLogResultForAritmetic(){
  
  File[] allFilesFromResults = new File(TrainingResultsFolder).listFiles();
  
@@ -102,7 +102,13 @@ ArrayList<String> TxtFileContent = new ArrayList<String>();
  NewFileContentArray[t] = NewFileContent.get(t);
  }
  
+ if(NewFileContentArray == null || NewFileContent.size() == 0 || NewFileContentArray.length == 0){
+ System.err.println("NewFileContentArray Error"); 
+ break;
+ }    
+ 
      try {
+         
          if(NewFileContentArray.length > 0){
          System.out.println("NewFileContentArray: "+NewFileContentArray.length);
              System.out.println("Path: "+WordsFile);
@@ -115,7 +121,7 @@ ArrayList<String> TxtFileContent = new ArrayList<String>();
          System.out.println("Erro na gravacao... " +WordsFile);
      }
  
- } 
+ }//For First
      
  }
      

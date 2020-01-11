@@ -26,7 +26,11 @@ public class Comparator {
     
     static String[] Words = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","x","y","z"};
     
+    static int Tolerance_;
+    
     public static void passComparatorWithTolerance(File file,int Tolerance) throws FileNotFoundException, IOException{
+        
+    Tolerance_ = Tolerance;
         
     for(int i =0;i<Words.length;i++){
         
@@ -304,7 +308,7 @@ public class Comparator {
     for(int i =0;i<Words.length;i++){
         
     int EqualsIndex = 0;
-    String SeqIn = "";
+    ArrayList<String> SeqIn = new ArrayList<>();
     String SeqOut = "";
     
     ArrayList<String> Sequence = new ArrayList<String>();
@@ -359,7 +363,8 @@ public class Comparator {
     if(Integer.parseInt(ScriptSoundWave.get(y)) == (tempNumber+h)){
         
     AddEquals = true;
-    SeqIn = ScriptTimer.get(y);
+    SeqIn.add(ScriptTimer.get(y));
+    //System.err.println(SeqIn);
     //System.out.println("Very Good: "+(tempNumber+h));
     break;
     
@@ -374,7 +379,7 @@ public class Comparator {
     
     if(EqualsIndex < SymmetricIn){
     EqualsIndex = 0;
-    SeqIn = "";
+    SeqIn = new ArrayList<>();
     SeqOut ="";
     
     }else{
@@ -385,12 +390,16 @@ public class Comparator {
         
     SeqOut = ScriptTimer.get(y);
     
-    if(SeqOut==SeqIn){
-    Sequence.add("Start:"+SeqIn);
-    //Sequence.add("Close:"+(SeqOut));   
+    for(int g=0;g<SeqIn.size();g++){
+     Sequence.add("Start:"+SeqIn.get(g));   
     }
     
-    SeqIn = "";
+    //if(SeqOut==SeqIn){
+    //Sequence.add("Start:"+SeqIn);
+    //Sequence.add("Close:"+(SeqOut));   
+    //}
+    
+    SeqIn = new ArrayList<>();
     SeqOut ="";
     EqualsIndex = 0;
     }
@@ -458,6 +467,10 @@ public class Comparator {
         }
     
     return FileContent;
+    }
+ 
+    public static int getTolerance(){
+    return Tolerance_;
     }
     
 }
