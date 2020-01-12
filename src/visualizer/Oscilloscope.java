@@ -119,21 +119,37 @@ public class Oscilloscope {
                 TXT_File = new File("C:\\Users\\Matheus Markies\\Desktop\\AnimationData\\SpeechDataBase\\ScriptData\\"+Main.AudioName+".txt");
                 }else{
                     try{
-                TXT_File = new File(getTrainingResultsFolder()+"\\"+allAudioFolders[IndexFolders].getName()+"\\"+AudioFilesFromFolder[NextAudio].getName()+".txt");
+                        System.out.println("");
+                        System.out.println("Training: "+getTrainingResultsFolder());
+                        System.out.println("allAudioFolders: "+allAudioFolders.length);
+                        System.out.println("IndexFolders : "+IndexFolders);
+                        System.out.println("");
+                        System.out.println("AudioFilesFromFolder: "+AudioFilesFromFolder.length);
+                        System.out.println("NextAudio: "+NextAudio);
+                        System.out.println("");
+                    TXT_File = new File(getTrainingResultsFolder()+"\\"+allAudioFolders[IndexFolders].getName()+"\\"+AudioFilesFromFolder[NextAudio].getName()+".txt");
                     }catch(Exception e){
                         System.err.println("TXT_File = null");
                         System.err.println(e);
                     }
+                
+                if(TXT_File != null){
                 File TXT_Folder = new File(getTrainingResultsFolder()+"\\"+allAudioFolders[IndexFolders].getName());
+                System.out.println("Training Folder: "+TXT_Folder);
                 if(!TXT_Folder.exists()){
                 TXT_Folder.mkdir();
+                    System.out.println("Creating New Training Folder");
                 }
+                }else{
+                System.err.println("Cancelado");
                 }
                 
-                 FrameClock rc = new FrameClock();
-                 Thread t = new Thread(rc);
-                 t.start(); 
+                }
                 
+                if(TXT_File != null){
+                
+                 Main.rc.resetTimer();
+                    
                  TXTUtilities.CreateTXT.CreateTXTFile(TXT_File);
                  TXTUtilities.WriteTXT.Write_TXT_File(TXT_File, "----------------------Music INFO----------------------");
                  
@@ -155,9 +171,9 @@ public class Oscilloscope {
 			visualizerDrawer.gc.strokeLine(c, yLast1, c + 1.00, yNow);
                         
                         if(yNow != 300){
-                            int Y = yNow-300;
+                           int Y = yNow-300;
                            if(!Main.Training){
-                           Ylist.add(FrameClock.getTimer()+":"+yNow);
+                           Ylist.add(Main.rc.getTimer()+":"+yNow);
                            }else{
                            Ylist.add(yNow+"");
                            }
@@ -175,6 +191,7 @@ public class Oscilloscope {
                         yLast1 = yNow;
 		}
 
+        }
 		// Oscilloscope will be stereo
 		if (stereo) {
 			colorIndex = (colorIndex == colorSize - 1) ? 0 : colorIndex + 1;

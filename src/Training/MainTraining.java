@@ -36,7 +36,7 @@ public void run() {
 File AudioFolderFile = new File(AudioFolder);
 allAudioFolders = AudioFolderFile.listFiles();
 
-while (true) {
+while (Main.Training == true) {
 
 if(IndexFolders < (allAudioFolders.length-1)){
 

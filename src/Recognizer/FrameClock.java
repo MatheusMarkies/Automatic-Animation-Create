@@ -9,6 +9,8 @@ import static Recognizer.Comparator.passComparatorSymmetric;
 import static Recognizer.Comparator.passComparatorWithTolerance;
 import static Recognizer.Comparator.passComparatorWithTolerancePlus;
 import static AnimationCreate.CreateKeyFrameData.VideoTime;
+import static Training.MainTraining.IndexFolders;
+import static Training.MainTraining.allAudioFolders;
 import application.Main;
 import static application.PlayerExample.streamPlayer;
 import java.io.IOException;
@@ -22,17 +24,18 @@ import static visualizer.Oscilloscope.getFile;
  */
 public class FrameClock extends Thread{
 
-    public static int CurrentFrame;
-    static int WhileTimer = 0;
+    public int CurrentFrame = 0;
+    int WhileTimer = 0;
     boolean Exec;
     
-    static String state_;
-    static boolean ChangeState;
+    String state_;
+    boolean ChangeState;
+    boolean ComparatorStart;
     
     public void run() {
     
-        int TotalFrames = VideoTime * 60;
-        CurrentFrame = 0;
+        //int TotalFrames = VideoTime * 60;
+        //CurrentFrame = 0;
         
         while (true) {
             
@@ -40,14 +43,19 @@ public class FrameClock extends Thread{
             //CurrentFrame += 1;
             //}
             
-            if(!streamPlayer.isPlaying() && WhileTimer > 0 && Main.Training == false){
+           // if(!streamPlayer.isPlaying())
+            
+           //if(!streamPlayer.isPlaying() && WhileTimer > 0 && !Main.Training)
+           
+            if(!streamPlayer.isPlaying() && WhileTimer > 0 && !Main.Training){
                 try {
-                    if(Exec == false){
                     //passComparatorSymmetric(getFile(),1);
                     //passComparatorWithTolerance(getFile(),60);
-                    passComparatorWithTolerancePlus(getFile(),100,3);
-                    Exec = true;
+                    if(ComparatorStart){
+                    passComparatorWithTolerancePlus(getFile(),60,3);
+                    ComparatorStart = false;
                     }
+                    
                 } catch (IOException ex) {
                     Logger.getLogger(FrameClock.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -56,7 +64,7 @@ public class FrameClock extends Thread{
 
             }
             
-            if(!streamPlayer.isPlaying() && WhileTimer > 0 && Main.Training == true){
+            if(!streamPlayer.isPlaying() && WhileTimer > 0 && Main.Training == true && IndexFolders < (allAudioFolders.length-1)){
             Training.MainTraining.ExcNextAudio = true;
             }else{
             
@@ -80,13 +88,18 @@ public class FrameClock extends Thread{
         
     }
     
-    public static int getCurretFrame (){
+    public int getCurretFrame (){
     return CurrentFrame;
     }
-    public static int getTimer(){
+    public int getTimer(){
     return WhileTimer;
     }
-    public static String setState(){
+    
+    public void resetTimer(){
+    WhileTimer = 0;   
+    }
+    
+    public String setState(){
     ChangeState = true;
     return state_;
     }

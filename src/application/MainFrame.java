@@ -9,6 +9,7 @@ import Recognizer.FrameClock;
 import static application.Main.AudioName;
 import static application.Main.playerExample;
 import com.sun.org.apache.xalan.internal.xsltc.trax.TrAXFilter;
+import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -80,6 +81,16 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     	// Selection of song to play
+        
+        String ResultPathBackup = "C:\\Users\\Matheus Markies\\Desktop\\AnimationData\\SpeechDataBase\\ScriptData\\FirstRecognizer\\";
+        File dir = new File(ResultPathBackup);
+        File[] ListFiles = dir.listFiles();
+        
+        for(File file_ : ListFiles)
+        file_.delete();
+            
+        Main.Reconizer = true;
+        
 	JFileChooser jFileChooser = new JFileChooser();
 	jFileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 	jFileChooser.setFileFilter(new FileNameExtensionFilter("audio","mp3","wav"));
@@ -102,7 +113,7 @@ public class MainFrame extends javax.swing.JFrame {
     if(Main.Training == false){
     Training.MainTraining rc = new Training.MainTraining();
     Thread t = new Thread(rc);
-    t.start();     
+    t.start();
     
     Main.Training = true;
     }else{

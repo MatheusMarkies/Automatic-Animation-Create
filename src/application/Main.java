@@ -1,6 +1,7 @@
 package application;
 
 import AnimationCreate.TestRunnable;
+import Recognizer.FrameClock;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.scene.Cursor;
@@ -18,6 +19,8 @@ public class Main extends Application{
       public static String AudioName;
       public static boolean Reconizer;
       public static boolean Training;
+      
+      public static FrameClock rc;
       
 	@Override
 	public void start(Stage primaryStage) {
@@ -48,6 +51,11 @@ public class Main extends Application{
 	}
 
 	public static void main(String[] args) {
+            
+        rc = new FrameClock();
+        Thread t = new Thread(rc);
+        t.start();
+            
 	launch(args);
 	}
     
