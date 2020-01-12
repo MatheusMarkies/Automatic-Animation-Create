@@ -254,11 +254,12 @@ public class Comparator {
 
     }//Method
 
-    public static void passComparatorWithTolerancePlus(File file, int Tolerance, int PassTimes) throws FileNotFoundException, IOException {
+    public static void passComparatorWithToleranceP(File file, int Tolerance, int PassTimes) throws FileNotFoundException, IOException {
 
-        System.out.println("Starting Comparator With Tolerance Plus...");
+        System.out.println("");
+        System.out.println("Starting Comparator With Tolerance + Pass Times...");
         System.out.println("Tolerance: "+Tolerance+"%");
-        System.out.println("PassTimes: "+PassTimes+"X");
+        System.out.println("Pass Times: "+PassTimes+"X");
         System.out.println("");
         
         File TempWords = new File(WordsPath);
@@ -296,6 +297,9 @@ public class Comparator {
         }
 
         for (int l = 0; l < PassTimes; l++) {
+            
+            System.out.println("Erro esta aqui? "+l);
+            
             ResultPath = ResultPathBackup;
             ResultPath = ResultPath + "" + l;
             File tempFolder = new File(ResultPath);
@@ -306,6 +310,8 @@ public class Comparator {
 
             for (int i = 0; i < Words.length; i++) {
 
+                System.out.println("Erro esta Words? "+i);
+                
                 int EqualsIndex = 0;
                 ArrayList<String> SeqIn = new ArrayList<>();
                 String SeqOut = "";
@@ -337,10 +343,11 @@ public class Comparator {
                         ScriptTimer.add(Temp[0]);
                         ScriptSoundWave.add(Temp[1]);
                         }catch(Exception e){
+                        System.err.println(e);
                         break;
                         }
                     }
-
+                    System.out.println("Erro??");
                 }//Separator
 
                 WordsFileSeq = readTXTFileWithOutJavaUtilities(WordsFile);

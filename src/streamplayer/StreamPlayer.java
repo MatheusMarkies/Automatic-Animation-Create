@@ -23,6 +23,7 @@
 
 package streamplayer;
 
+import application.Main;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -60,6 +61,7 @@ import org.tritonus.share.sampled.file.TAudioFileFormat;
 
 import javazoom.spi.PropertiesContainer;
 import streamplayer.StreamPlayerException.PlayerException;
+import visualizer.Oscilloscope;
 
 /**
  * StreamPlayer is a class based on JavaSound API. It has been successfully
@@ -581,6 +583,9 @@ public class StreamPlayer implements Runnable {
 	    //		sourceDataLine.stop();
 	    //		sourceDataLine.flush();
 	    //	    }
+            
+            
+            
 	    status = Status.STOPPED;
 	    generateEvent(Status.STOPPED, getEncodedStreamPosition(), null);
 	    // System.out.println("StreamPlayer stop() before!
@@ -678,6 +683,7 @@ public class StreamPlayer implements Runnable {
 	    if (sourceDataLine != null) {
 		sourceDataLine.start();
 		status = Status.PLAYING;
+                Main.rc.resetTimer();
 		generateEvent(Status.PLAYING, getEncodedStreamPosition(), null);
 	    }
 	}
@@ -884,6 +890,7 @@ public class StreamPlayer implements Runnable {
 	generateEvent(Status.STOPPED, AudioSystem.NOT_SPECIFIED, null);
 
 	//Log
+        createMainMusicFile();
 	logger.info("Decoding thread completed");
 
     }
@@ -1378,4 +1385,27 @@ public class StreamPlayer implements Runnable {
 	return status == Status.SEEKING;
     }
 
+        void createMainMusicFile(){
+            
+            System.out.println("Creating Music Main File...");
+            
+            TXTUtilities.CreateTXT.CreateTXTFile(Oscilloscope.getTxtFolder());
+            //TXTUtilities.WriteTXT.Write_TXT_File(Oscilloscope.getTxtFolder(), "----------------------Music INFO----------------------");
+
+            
+            try{
+                String[] List = new String[Oscilloscope.getYlist().size()];
+
+                for (int i = 0; i < List.length; i++) {
+                    List[i] = Oscilloscope.getYlist().get(i);
+                }
+
+            TXTUtilities.WriteTXT.Write_Array_TXT_File(Oscilloscope.getTxtFolder(), List);
+            } catch (IOException ex) {
+
+            }
+        
+    }
+    
+    
 }

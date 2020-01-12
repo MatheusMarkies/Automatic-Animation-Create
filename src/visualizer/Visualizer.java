@@ -22,6 +22,9 @@
  */
 package visualizer;
 
+import application.Main;
+import com.sun.javafx.cursor.CursorType;
+import java.awt.Font;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -208,8 +211,11 @@ public class Visualizer extends VisualizerDrawer {
 					nextSecond = nanos + ONE_SECOND_NANOS;
 				}
 
-				gc.setStroke(Color.YELLOW);
+				gc.setStroke(Color.AQUA);
 				gc.strokeText("FPS: " + fps + " (FRRH: " + frameRateRatioHint + ")", 0, canvasHeight - 1.00);
+                                gc.setStroke(Color.RED);
+                                gc.strokeText("Y: "+Oscilloscope.getYnow()+"  |  Time Seconds: "+Main.rc.getTimer(), (canvasWidth/2)-70.00, canvasHeight-1);
+                                
 			}
 
 		}

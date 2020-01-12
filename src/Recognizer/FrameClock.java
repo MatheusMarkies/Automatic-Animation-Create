@@ -6,8 +6,7 @@
 package Recognizer;
 
 import static Recognizer.Comparator.passComparatorSymmetric;
-import static Recognizer.Comparator.passComparatorWithTolerance;
-import static Recognizer.Comparator.passComparatorWithTolerancePlus;
+import static Recognizer.Comparator.passComparatorWithToleranceP;
 import static AnimationCreate.CreateKeyFrameData.VideoTime;
 import static Training.MainTraining.IndexFolders;
 import static Training.MainTraining.allAudioFolders;
@@ -16,6 +15,7 @@ import static application.PlayerExample.streamPlayer;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import visualizer.Oscilloscope;
 import static visualizer.Oscilloscope.getFile;
 
 /**
@@ -30,7 +30,8 @@ public class FrameClock extends Thread{
     
     String state_;
     boolean ChangeState;
-    boolean ComparatorStart;
+    
+    boolean ComparatorStart = true;
     
     public void run() {
     
@@ -49,10 +50,13 @@ public class FrameClock extends Thread{
            
             if(!streamPlayer.isPlaying() && WhileTimer > 0 && !Main.Training){
                 try {
+                    
+                    //createMainMusicFile();
+                    
                     //passComparatorSymmetric(getFile(),1);
                     //passComparatorWithTolerance(getFile(),60);
                     if(ComparatorStart){
-                    passComparatorWithTolerancePlus(getFile(),60,3);
+                    passComparatorWithToleranceP(getFile(),60,3);
                     ComparatorStart = false;
                     }
                     
@@ -65,6 +69,7 @@ public class FrameClock extends Thread{
             }
             
             if(!streamPlayer.isPlaying() && WhileTimer > 0 && Main.Training == true && IndexFolders < (allAudioFolders.length-1)){
+            //createMainMusicFile();
             Training.MainTraining.ExcNextAudio = true;
             }else{
             
@@ -103,5 +108,7 @@ public class FrameClock extends Thread{
     ChangeState = true;
     return state_;
     }
+    
+
     
 }
