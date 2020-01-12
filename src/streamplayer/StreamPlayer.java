@@ -684,6 +684,7 @@ public class StreamPlayer implements Runnable {
 		sourceDataLine.start();
 		status = Status.PLAYING;
                 Main.rc.resetTimer();
+                Oscilloscope.resetYlist();
 		generateEvent(Status.PLAYING, getEncodedStreamPosition(), null);
 	    }
 	}
@@ -1385,14 +1386,16 @@ public class StreamPlayer implements Runnable {
 	return status == Status.SEEKING;
     }
 
-        void createMainMusicFile(){
+    void createMainMusicFile(){
             
             System.out.println("Creating Music Main File...");
+            
+            if(Oscilloscope.getTxtFolder().exists())
+            Oscilloscope.getTxtFolder().delete();
             
             TXTUtilities.CreateTXT.CreateTXTFile(Oscilloscope.getTxtFolder());
             //TXTUtilities.WriteTXT.Write_TXT_File(Oscilloscope.getTxtFolder(), "----------------------Music INFO----------------------");
 
-            
             try{
                 String[] List = new String[Oscilloscope.getYlist().size()];
 
@@ -1401,6 +1404,7 @@ public class StreamPlayer implements Runnable {
                 }
 
             TXTUtilities.WriteTXT.Write_Array_TXT_File(Oscilloscope.getTxtFolder(), List);
+            Oscilloscope.resetYlist();
             } catch (IOException ex) {
 
             }

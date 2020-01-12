@@ -90,7 +90,7 @@ public class Oscilloscope {
     @SuppressWarnings("unused")
     private static int yOld = 0;
 
-    static ArrayList<String> Ylist = new ArrayList<String>();
+    static ArrayList<String> Ylist;
     static File TXT_File;
 
     /**
@@ -247,6 +247,10 @@ public class Oscilloscope {
     return TXT_File;
     }
     
+    public static void resetYlist(){
+        Ylist = Ylist = new ArrayList<String>();;
+    }
+    
     void addToList(int value) {
 
         if (TXT_File != null) {
@@ -256,7 +260,7 @@ public class Oscilloscope {
                     if (!Main.Training) {
                         Ylist.add(Main.rc.getTimer() + ":" + value);
                     } else {
-                        Ylist.add(0 + "");
+                    //Ylist.add(0 + "");
                     }
                 }
 

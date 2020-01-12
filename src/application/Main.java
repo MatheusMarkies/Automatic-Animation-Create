@@ -21,6 +21,7 @@ public class Main extends Application{
       public static boolean Training;
       
       public static FrameClock rc;
+      public static Thread t;
       
 	@Override
 	public void start(Stage primaryStage) {
@@ -53,9 +54,9 @@ public class Main extends Application{
 	public static void main(String[] args) {
             
         rc = new FrameClock();
-        Thread t = new Thread(rc);
+        t = new Thread(rc);
         t.start();
-            
+        System.out.println("Starting...");
 	launch(args);
 	}
     

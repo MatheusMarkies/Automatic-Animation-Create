@@ -169,7 +169,7 @@ public class Comparator {
             System.out.println("Letter: " + Words[i]);
         }//Main For
 
-    }
+    }//Method
 
     public static void passComparatorSymmetric(File file, int SymmetricIn) throws FileNotFoundException, IOException {
 
@@ -296,9 +296,10 @@ public class Comparator {
             //System.out.println("Words "+WordsList);
         }
 
+        Temps = null;
+        TempWords = null;
+        
         for (int l = 0; l < PassTimes; l++) {
-            
-            System.out.println("Erro esta aqui? "+l);
             
             ResultPath = ResultPathBackup;
             ResultPath = ResultPath + "" + l;
@@ -309,8 +310,6 @@ public class Comparator {
             ResultPath = ResultPath + "\\";
 
             for (int i = 0; i < Words.length; i++) {
-
-                System.out.println("Erro esta Words? "+i);
                 
                 int EqualsIndex = 0;
                 ArrayList<String> SeqIn = new ArrayList<>();
@@ -343,22 +342,31 @@ public class Comparator {
                         ScriptTimer.add(Temp[0]);
                         ScriptSoundWave.add(Temp[1]);
                         }catch(Exception e){
-                        System.err.println(e);
-                        break;
+                        System.out.println(e);
+                        //break;
                         }
                     }
-                    System.out.println("Erro??");
+                    //System.out.println("ScriptContent size: "+ScriptContent.size());
+                    //System.out.println("Erro??"+ y);
                 }//Separator
 
+                ScriptContent.clear();
                 WordsFileSeq = readTXTFileWithOutJavaUtilities(WordsFile);
 
+                System.out.println("Print Test "+WordsFileSeq.size());
+                
                 // System.out.println("-------------------------------------------");
                 // System.out.println("ScriptContent Size: "+ScriptContent.size());
                 // System.out.println("WordsFileSeq Size: "+WordsFileSeq.size());
                 //System.out.println("ScriptSoundWave Size: "+ScriptSoundWave.size());
                 // System.out.println("");
                 int SymmetricIn = 0;
-                for (int y = 0; y < ScriptSoundWave.size(); y++) {
+                
+                int SoundWaveSize = ScriptSoundWave.size();
+                
+                
+                try{
+                for (int y = 0; y < SoundWaveSize; y++) {
                     for (int u = 0; u < WordsFileSeq.size(); u++) {
 
                         //System.out.println("WordsFileSeq "+WordsFileSeq.get(u));
@@ -386,7 +394,7 @@ public class Comparator {
                         if (AddEquals) {
                             EqualsIndex += 1;
                         }
-
+                        //System.out.println("WordsFileSeq: "+ WordsFileSeq.size()+" | "+ u+" || ScriptSoundWave: "+ScriptSoundWave.size()+" | "+y);
                     }
 
                     if (EqualsIndex < SymmetricIn) {
@@ -413,8 +421,20 @@ public class Comparator {
                         SeqOut = "";
                         EqualsIndex = 0;
                     }
+                
+                    //double c = (y * 100)/SoundWaveSize;
+                    //System.out.println("SoundWave Processing: "+y+" | "+SoundWaveSize+" | "+c+"%");
+                    ScriptSoundWave.remove(y);
+                
                 }
-
+                //Marca
+                }catch(Throwable e){
+                System.out.println(e);
+                //break;
+                }
+                
+                
+                System.out.println("SoundWave Process Finish!");
                 if (Sequence.size() > 0) {
                     File ResultFile = new File(ResultPath + Words[i] + ".txt");
 
@@ -480,11 +500,11 @@ public class Comparator {
 
         }
         }catch(Exception e){
-            System.err.println(e);
+            System.out.println(e);
             //System.err.println("file: "+file);
-        }finally{
-        return FileContent;
         }
+        
+      return FileContent;
     }
 
     public static int getTolerance() {
